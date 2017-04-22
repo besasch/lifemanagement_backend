@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.benny</groupId>
+    <version>0.1</version>
+    <packaging>war</packaging>
+
+    <name>lifemanagement</name>
+    <description>communication with microservices</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- <start-class>com.Application</start-class> -->
+        <java.version>1.8</java.version>
+        <docker.image.prefix>aucobo</docker.image.prefix>
+    </properties>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.1.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <dependencyManagement>
+       <dependencies>
+           <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Brixton.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+           </dependency>
+       </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+
+<!--         jsp servlets -->
+        <dependency>
+         <groupId>org.apache.tomcat.embed</groupId>
+         <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+
+        <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>      -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+	        <scope>runtime</scope>
+	    </dependency>
+	    <dependency>
+	       <groupId>org.springframework.boot</groupId>
+	       <artifactId>spring-boot-actuator</artifactId>
+	    </dependency>
+	    <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    	</dependency>
+
+    </dependencies>
+
+
+    <build>
+        <finalName>frontend</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+<!--                 <version>1.5.1.RELEASE</version> -->
+        				<executions>
+              			<execution>
+                				<goals>
+                  				<goal>repackage</goal>
+                				</goals>
+              			</execution>
+          			</executions>
+<!-- 	            <configuration> -->
+<!-- 					external resource folders added by StaticResourceConfiguration -->
+<!-- 					adds external resources into .jar/.war file -->
+<!-- 	      		  <addResources>true</addResources> -->
+<!-- 	      		</configuration> -->
+            </plugin>
+            <plugin>
+			        <artifactId>maven-resources-plugin</artifactId>
+	<!-- 		        <version>3.0.2</version> -->
+		        <executions>
+		          <execution>
+		            <id>copy-resources</id>
+		            <!-- here the phase you need -->
+		            <phase>validate</phase>
+		            <goals>
+		              <goal>copy-resources</goal>
+		            </goals>
+		            <configuration>
+		              <outputDirectory>${basedir}/target/img</outputDirectory>
+		              <resources>          
+		                <resource>
+		                  <directory>img</directory>
+		                  <filtering>false</filtering>
+		                </resource>
+		              </resources>              
+		            </configuration>            
+		          </execution>
+		        </executions>
+		      </plugin>
+            <plugin>
+		      <groupId>com.spotify</groupId>
+		      <artifactId>docker-maven-plugin</artifactId>
+		      <version>0.4.11</version>
+		      <configuration>
+		          <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+		          <dockerDirectory>src/main/docker</dockerDirectory>
+		          <!-- optionally overwrite tags every time image is built with docker:build -->
+		          <forceTags>true</forceTags>
+		          <imageTags>
+		         	<imageTag>${project.version}</imageTag>
+		         	<!-- <imageTag>latest</imageTag> -->
+		         </imageTags>
+		         <resources>
+		             <resource>
+		                 <targetPath>/</targetPath>
+		                 <directory>${project.build.directory}</directory>
+		                 <include>${project.build.finalName}.war</include>
+		             </resource>
+		             <resource>
+		                 <targetPath>/</targetPath>
+		                 <directory>${project.build.directory}</directory>
+		                 <include>img/**</include>
+		             </resource>		             		             		                 	
+		         </resources>
+		      </configuration>
+		    </plugin>
+        </plugins>
+    </build>
+    <artifactId>lifemanagement</artifactId>
+</project>
