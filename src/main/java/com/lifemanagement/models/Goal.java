@@ -2,6 +2,7 @@ package com.lifemanagement.models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,6 +18,8 @@ public class Goal {
 	String lifearea;
 	String category;
 	String timehorizont;
+	Indicator goalReachedIndicator;
+	ArrayList<StatusLogItem> statusLog;
 	ArrayList<Goal> subgoals;
 	Date created;
 	public String get_id() {
@@ -79,6 +82,21 @@ public class Goal {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-	
+	public Indicator getGoalReachedIndicator() {
+		return goalReachedIndicator;
+	}
+
+	public void setGoalReachedIndicator(Indicator goalReachedIndicator) {
+		this.goalReachedIndicator = goalReachedIndicator;
+	}
+
+	public ArrayList<StatusLogItem> getStatusLog() {
+		return statusLog;
+	}
+
+	public void setStatusLog(ArrayList<StatusLogItem> statusLog) {
+		this.statusLog = statusLog;
+	}
+
 
 }

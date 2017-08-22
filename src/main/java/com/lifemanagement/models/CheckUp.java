@@ -6,13 +6,13 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "checkUpTemplates")
+@Document(collection = "checkUps")
 public class CheckUp {
 	@Id
 	String _id;
 	String category;
 	Date created;
-	ArrayList<Question> questionTemplates;
+	ArrayList<Question> questions;
 	ArrayList<ToDo> todos;
 	public String get_id() {
 		return _id;
@@ -32,11 +32,12 @@ public class CheckUp {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-	public ArrayList<Question> getQuestionTemplates() {
-		return questionTemplates;
+	
+	public ArrayList<Question> getQuestions() {
+		return questions;
 	}
-	public void setQuestionTemplates(ArrayList<Question> questionTemplates) {
-		this.questionTemplates = questionTemplates;
+	public void setQuestions(ArrayList<Question> questions) {
+		this.questions = questions;
 	}
 	public ArrayList<ToDo> getTodos() {
 		return todos;
