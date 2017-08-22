@@ -16,4 +16,11 @@ public class StatusLogItem {
         return timestamp;
     }
 
+    public Indicator getIndicatorStatus() {
+        return indicatorStatus;
+    }
+
+    public void setIndicatorStatus(Indicator indicatorStatus) {
+        this.indicatorStatus = indicatorStatus;
+    }
 }
