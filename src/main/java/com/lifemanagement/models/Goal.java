@@ -18,6 +18,7 @@ public class Goal {
 	String lifearea;
 	String category;
 	String timehorizont;
+	String status;
 	Indicator goalReachedIndicator;
 	ArrayList<StatusLogItem> statusLog;
 	ArrayList<Goal> subgoals;
@@ -70,6 +71,15 @@ public class Goal {
 	public void setTimehorizont(String timehorizont) {
 		this.timehorizont = timehorizont;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public ArrayList<Goal> getSubgoals() {
 		return subgoals;
 	}

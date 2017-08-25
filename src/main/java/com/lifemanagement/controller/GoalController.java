@@ -40,8 +40,23 @@ public class GoalController {
 	public GoalController() {
 	}
 	
+	@RequestMapping(value = {"/goals/status=notreached"}, method = RequestMethod.GET, produces="application/json")
+    public List<Goal> getAllNotFinishedGoals(HttpServletResponse response) {
+		logger.debug("Get all Goal");
+		try {
+			logger.info(this.mongoURI);
+			logger.info(InetAddress.getLocalHost().getHostName());
+			logger.info(InetAddress.getLocalHost().getHostAddress());
+		} catch (UnknownHostException e) {
+			logger.error("no host name could be found");
+		}
+		response.setStatus(HttpServletResponse.SC_OK);
+		return goalRepo.findByStatusNot("reached");
+    }
+
+
 	@RequestMapping(value = {"/goals", "/"}, method = RequestMethod.GET, produces="application/json")
-    public List<Goal> getAllGoals(HttpServletResponse response) {
+	public List<Goal> getAllGoals(HttpServletResponse response) {
 		logger.debug("Get all Goal");
 		try {
 			logger.info(this.mongoURI);
@@ -52,7 +67,7 @@ public class GoalController {
 		}
 		response.setStatus(HttpServletResponse.SC_OK);
 		return goalRepo.findAll();
-    }
+	}
 	
 	@RequestMapping(value = "/goals", method = RequestMethod.POST, consumes="application/json", produces = "application/json")
 	public Goal post( @RequestBody Goal newGoal, HttpServletResponse response) {
