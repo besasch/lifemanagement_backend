@@ -10,3 +10,6 @@ WebContent
 .classpath
 .DS_Store
 *.log
+.idea
+.idea/
+/.idea/
